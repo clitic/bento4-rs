@@ -35,7 +35,7 @@
 **v**ideo **s**tream **d**ownloader is a command line program to download video streams served over HTTP from websites, [HLS](https://howvideo.works/#hls) and [DASH](https://howvideo.works/#dash) playlists.
 
 <p align="center">
-  <img src="https://github.com/clitic/vsd/blob/main/images/showcase.gif">
+  <img src="https://github.com/clitic/vsd/blob/main/vsd/images/showcase.gif">
 </p>
 
 ## Features
@@ -59,13 +59,13 @@ Dependencies
 - [ffmpeg](https://www.ffmpeg.org/download.html) (optional, *recommended*) only required for transmuxing and transcoding streams.
 - [chrome](https://www.google.com/chrome) / [chromium](https://www.chromium.org/getting-involved/download-chromium/) (optional) only required for `capture` and `collect` subcommands. 
 
-Visit [releases](https://github.com/clitic/vsd/releases) for prebuilt binaries. Download and extract archive and copy vsd binary to any path. Now add that path to your `PATH` environment variable. Build instructions can be found [here](https://github.com/clitic/vsd/blob/main/BUILD.md) and changelog [here](https://github.com/clitic/vsd/blob/main/CHANGELOG.md).
+Visit [releases](https://github.com/clitic/vsd/releases) for prebuilt binaries. Download and extract archive and copy vsd binary to any path. Now add that path to your `PATH` environment variable. Build instructions can be found [here](https://github.com/clitic/vsd/blob/main/vsd/BUILD.md) and changelog [here](https://github.com/clitic/vsd/blob/main/vsd/CHANGELOG.md).
 
 | Host                | Architecture | Download                                                                                                      | Install                                                                                |
 |---------------------|--------------|---------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
-| Android 7+ (Termux) | aarch64      | [.tar.gz](https://github.com/clitic/vsd/releases/download/v0.2.5/vsd-v0.2.5-aarch64-linux-android.tar.gz)     | [command](https://github.com/clitic/vsd/blob/main/INSTALL.md#android-7-termux-aarch64) |
-| Linux               | x86_64       | [.tar.gz](https://github.com/clitic/vsd/releases/download/v0.2.5/vsd-v0.2.5-x86_64-unknown-linux-musl.tar.gz) | [command](https://github.com/clitic/vsd/blob/main/INSTALL.md#linux-x86_64)             |
-| MacOS 12.3+         | x86_64       | [.tar.gz](https://github.com/clitic/vsd/releases/download/v0.2.5/vsd-v0.2.5-x86_64-apple-darwin.tar.gz)       | [command](https://github.com/clitic/vsd/blob/main/INSTALL.md#macos-123-x86_64)         |
+| Android 7+ (Termux) | aarch64      | [.tar.gz](https://github.com/clitic/vsd/releases/download/v0.2.5/vsd-v0.2.5-aarch64-linux-android.tar.gz)     | [command](https://github.com/clitic/vsd/blob/main/vsd/INSTALL.md#android-7-termux-aarch64) |
+| Linux               | x86_64       | [.tar.gz](https://github.com/clitic/vsd/releases/download/v0.2.5/vsd-v0.2.5-x86_64-unknown-linux-musl.tar.gz) | [command](https://github.com/clitic/vsd/blob/main/vsd/INSTALL.md#linux-x86_64)             |
+| MacOS 12.3+         | x86_64       | [.tar.gz](https://github.com/clitic/vsd/releases/download/v0.2.5/vsd-v0.2.5-x86_64-apple-darwin.tar.gz)       | [command](https://github.com/clitic/vsd/blob/main/vsd/INSTALL.md#macos-123-x86_64)         |
 | Windows             | x86_64       | [.zip](https://github.com/clitic/vsd/releases/download/v0.2.5/vsd-v0.2.5-x86_64-pc-windows-msvc.zip)          |                                                                                        |
 
 ## Usage
