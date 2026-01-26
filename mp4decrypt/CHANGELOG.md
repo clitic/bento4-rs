@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.1] - 2026-01-26
+
+### Changed
+
+- Moved repository [clitic/vsd](https://github.com/clitic/vsd) -> [clitic/bento4-rs](https://github.com/clitic/bento4-rs)
+
 ### Fixed
 
 - Clippy issues.
@@ -94,7 +100,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0] - 2022-08-31
 
-[Unreleased]: https://github.com/clitic/vsd/compare/mp4decrypt-0.6.0...HEAD
+[Unreleased]: https://github.com/clitic/bento4-rs/compare/mp4decrypt-0.6.0...HEAD
+[0.6.1]: https://github.com/clitic/vsd/compare/mp4decrypt-0.6.0...mp4decrypt-0.6.1
 [0.6.0]: https://github.com/clitic/vsd/compare/mp4decrypt-0.5.1...mp4decrypt-0.6.0
 [0.5.1]: https://github.com/clitic/vsd/compare/mp4decrypt-v0.5.0...mp4decrypt-0.5.1
 [0.5.0]: https://github.com/clitic/vsd/compare/mp4decrypt-v0.4.2...mp4decrypt-0.5.0

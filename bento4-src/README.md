@@ -10,7 +10,10 @@
   <a href="https://docs.rs/bento4-src">
     <img src="https://img.shields.io/docsrs/bento4-src?logo=docsdotrs&style=flat-square">
   </a>
-  <a href="https://github.com/clitic/vsd/blob/main/bento4-src/README.md#license">
+  <a href="https://github.com/clitic/bento4-rs">
+    <img src="https://img.shields.io/github/actions/workflow/status/clitic/bento4-rs/ci.yml?logo=github&style=flat-square">
+  </a>
+  <a href="https://github.com/clitic/bento4-rs/blob/main/bento4-src/README.md#license">
     <img src="https://img.shields.io/crates/l/bento4-src?style=flat-square">
   </a>
 </p>
@@ -32,7 +35,7 @@ Or add from command line.
 $ cargo add bento4-src --build
 ```
 
-See [docs](https://docs.rs/bento4-src) and [examples](https://github.com/clitic/vsd/blob/main/mp4decrypt/build.rs) to 
+See [docs](https://docs.rs/bento4-src) and [examples](https://github.com/clitic/bento4-rs/blob/main/mp4decrypt/build.rs) to 
 know how to use it.
 
 ## License
