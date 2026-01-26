@@ -18,7 +18,7 @@
   </a>
 </p>
 
-This crate provides a safe high-level API to decrypt CENC/CENS/CBC1/CBCS encrypted MP4 content using [Bento4](https://github.com/axiomatic-systems/Bento4).
+This crate provides a safe high-level API to decrypt CENC/CENS/CBC1/CBCS protected MP4 content using [Bento4](https://github.com/axiomatic-systems/Bento4).
 
 ## Getting Started
 
