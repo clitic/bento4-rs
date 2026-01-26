@@ -1,4 +1,4 @@
-//! This crate provides a safe high-level API to decrypt CENC/CENS/CBC1/CBCS encrypted MP4 data
+//! This crate provides a safe high-level API to decrypt CENC/CENS/CBC1/CBCS protected MP4 content
 //! using [Bento4](https://github.com/axiomatic-systems/Bento4).
 //!
 //! ## Environment Variables
@@ -17,7 +17,7 @@
 //!
 //! ```no_run
 //! use mp4decrypt::Ap4CencDecryptingProcessor;
-//! use std::{error::Error, fs};
+//! use std::{error::Error, fs, io::Write};
 //!
 //! fn main() -> Result<(), Box<dyn Error>> {
 //!     // Create a processor with decryption keys
@@ -29,7 +29,11 @@
 //!     let init_data = fs::read("init.mp4")?;
 //!     let segment_data = fs::read("segment.m4s")?;
 //!     let decrypted = processor.decrypt(&segment_data, Some(&init_data))?;
-//!     fs::write("output.mp4", decrypted)?;
+//!
+//!     // Write playable MP4 (init + decrypted segment)
+//!     let mut f = fs::File::create("output.mp4")?;
+//!     f.write_all(&init_data)?;
+//!     f.write_all(&decrypted)?;
 //!
 //!     Ok(())
 //! }
@@ -63,7 +67,12 @@
 //!             thread::spawn(move || {
 //!                 let segment = fs::read(format!("segment_{}.m4s", i)).unwrap();
 //!                 let decrypted = processor.decrypt(&segment, Some(&*init)).unwrap();
-//!                 fs::write(format!("decrypted_{}.mp4", i), decrypted).unwrap();
+//!
+//!                 // Write playable MP4 (init + decrypted segment)
+//!                 let mut f = fs::File::create(format!("decrypted_{}.mp4", i)).unwrap();
+//!                 use std::io::Write;
+//!                 f.write_all(&*init).unwrap();
+//!                 f.write_all(&decrypted).unwrap();
 //!             })
 //!         })
 //!         .collect();
@@ -194,35 +203,45 @@ impl Ap4CencDecryptingProcessor {
     /// Decrypts encrypted MP4 data in memory.
     ///
     /// This method takes encrypted segment data and an optional initialization segment,
-    /// merges them together, and returns the decrypted MP4 data as a playable file.
+    /// and returns the decrypted segment data. The init segment is passed separately
+    /// to the decryption processor for parsing encryption metadata.
     ///
     /// # Arguments
     ///
     /// * `input_data` - The encrypted MP4 segment data (e.g., `.m4s` fragment)
-    /// * `init_data` - Optional initialization segment data (e.g., `init.mp4`). When provided,
-    ///   the init data is prepended to the input, resulting in a complete playable MP4.
+    /// * `init_data` - Optional initialization segment data (e.g., `init.mp4`). Required
+    ///   for fragmented MP4 streams to provide encryption metadata.
     ///
     /// # Returns
     ///
-    /// Returns `Ok(Vec<u8>)` containing the decrypted data on success, or an error if:
-    /// - The combined data exceeds 4GB ([`Error::DataTooLarge`])
+    /// Returns `Ok(Vec<u8>)` containing the decrypted segment data on success, or an error if:
+    /// - The input or init data exceeds 4GB ([`Error::DataTooLarge`])
     /// - Decryption fails ([`Error::DecryptionFailed`])
+    ///
+    /// # Note
+    ///
+    /// The returned data contains only the decrypted segment, **not** the init segment.
+    /// To create a playable MP4 file, you must manually prepend the init segment.
     ///
     /// # Example
     ///
     /// ```no_run
     /// use mp4decrypt::Ap4CencDecryptingProcessor;
-    /// use std::fs;
+    /// use std::{fs, io::Write};
     ///
     /// let processor = Ap4CencDecryptingProcessor::new()
     ///     .key("eb676abbcb345e96bbcf616630f1a3da", "100b6c20940f779a4589152b57d2dacb")?
     ///     .build()?;
     ///
-    /// // With initialization segment (produces playable MP4)
+    /// // With initialization segment
     /// let init = fs::read("video_init.mp4")?;
     /// let segment = fs::read("video_1.m4s")?;
     /// let decrypted = processor.decrypt(&segment, Some(&init))?;
-    /// fs::write("output.mp4", decrypted)?;
+    ///
+    /// // Create playable MP4 by prepending init segment
+    /// let mut f = fs::File::create("output.mp4")?;
+    /// f.write_all(&init)?;
+    /// f.write_all(&decrypted)?;
     ///
     /// // Without initialization segment (raw decrypted segment)
     /// let decrypted_raw = processor.decrypt(&segment, None::<&Vec<u8>>)?;
