@@ -19,6 +19,7 @@ int ap4_decrypt_file(Ap4CencDecryptingProcessor *ctx, const char *input_path,
 
 int ap4_decrypt_memory(Ap4CencDecryptingProcessor *ctx,
                        const unsigned char *input_data, unsigned int input_size,
+                       const unsigned char *init_data, unsigned int init_size,
                        unsigned char **output_data, unsigned int *output_size);
 
 #ifdef __cplusplus

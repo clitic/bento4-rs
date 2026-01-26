@@ -43,10 +43,11 @@ macro_rules! sample {
             let decrypted = ctx.decrypt(&segment_data, Some(&init_data))?;
 
             fs::create_dir_all(OUTPUT_DIR.join(concat!($scheme, "-", $mode)))?;
-            fs::write(
-                OUTPUT_DIR.join(concat!($scheme, "-", $mode, "/", $track, ".mp4")),
-                decrypted,
-            )?;
+
+            let mut f =
+                File::create(OUTPUT_DIR.join(concat!($scheme, "-", $mode, "/", $track, ".mp4")))?;
+            f.write_all(&init_data)?;
+            f.write_all(&decrypted)?;
             Ok(())
         }
     };

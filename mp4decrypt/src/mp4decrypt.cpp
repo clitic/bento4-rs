@@ -87,10 +87,23 @@ int ap4_decrypt_file(Ap4CencDecryptingProcessor *ctx, const char *input_path,
 
 int ap4_decrypt_memory(Ap4CencDecryptingProcessor *ctx,
                        const unsigned char *input_data, unsigned int input_size,
+                       const unsigned char *init_data, unsigned int init_size,
                        unsigned char **output_data, unsigned int *output_size) {
+  AP4_ByteStream *init = NULL;
+  if (init_data != NULL && init_size > 0) {
+    init = new AP4_MemoryByteStream(init_data, init_size);
+  }
+
   AP4_ByteStream *input = new AP4_MemoryByteStream(input_data, input_size);
   AP4_MemoryByteStream *output = new AP4_MemoryByteStream();
-  AP4_Result result = ctx->processor->Process(*input, *output, NULL);
+
+  AP4_Result result;
+  if (init) {
+    result = ctx->processor->Process(*input, *output, *init, NULL);
+    init->Release();
+  } else {
+    result = ctx->processor->Process(*input, *output, NULL);
+  }
 
   input->Release();
 

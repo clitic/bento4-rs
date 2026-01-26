@@ -123,6 +123,8 @@ unsafe extern "C" {
         ctx: *mut c_void,
         input_data: *const c_uchar,
         input_size: c_uint,
+        init_data: *const c_uchar,
+        init_size: c_uint,
         output_data: *mut *mut c_uchar,
         output_size: *mut c_uint,
     ) -> c_int;
@@ -236,19 +238,20 @@ impl Ap4CencDecryptingProcessor {
         input_data: T,
         init_data: Option<T>,
     ) -> Result<Vec<u8>, Error> {
-        let mut data = Vec::with_capacity(
-            init_data.as_ref().map_or(0, |x| x.as_ref().len()) + input_data.as_ref().len(),
-        );
+        let input_ref = input_data.as_ref();
+        let input_ptr = input_ref.as_ptr();
+        let input_size = u32::try_from(input_ref.len()).map_err(|_| Error::DataTooLarge)?;
 
-        if let Some(init_data) = init_data {
-            data.extend_from_slice(init_data.as_ref());
-        }
+        let (init_ptr, init_size) = match &init_data {
+            Some(init) => {
+                let init_ref = init.as_ref();
+                let size = u32::try_from(init_ref.len()).map_err(|_| Error::DataTooLarge)?;
+                (init_ref.as_ptr(), size)
+            }
+            None => (ptr::null(), 0),
+        };
 
-        data.extend_from_slice(input_data.as_ref());
-
-        let data_size = u32::try_from(data.len()).map_err(|_| Error::DataTooLarge)?;
-
-        let mut output_data: *mut c_uchar = ptr::null_mut();
+        let mut output_ptr: *mut c_uchar = ptr::null_mut();
         let mut output_size: c_uint = 0;
 
         let result = {
@@ -256,9 +259,11 @@ impl Ap4CencDecryptingProcessor {
             unsafe {
                 ap4_decrypt_memory(
                     self.ptr,
-                    data.as_ptr(),
-                    data_size,
-                    &mut output_data,
+                    input_ptr,
+                    input_size,
+                    init_ptr,
+                    init_size,
+                    &mut output_ptr,
                     &mut output_size,
                 )
             }
@@ -266,9 +271,9 @@ impl Ap4CencDecryptingProcessor {
 
         if result == 0 {
             let decrypted = unsafe {
-                let slice = std::slice::from_raw_parts(output_data, output_size as usize);
+                let slice = std::slice::from_raw_parts(output_ptr, output_size as usize);
                 let vec = slice.to_vec();
-                ap4_free(output_data);
+                ap4_free(output_ptr);
                 vec
             };
             Ok(decrypted)
