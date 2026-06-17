@@ -1,13 +1,8 @@
 <h1 align="center">bento4-rs</h1>
 
-<p align="center">
-  <a href="https://github.com/clitic/bento4-rs">
-    <img src="https://img.shields.io/github/actions/workflow/status/clitic/bento4-rs/ci.yml?logo=github&style=flat-square">
-  </a>
-  <a href="https://github.com/clitic/bento4-rs/blob/main/mp4decrypt/README.md#license">
-    <img src="https://img.shields.io/crates/l/mp4decrypt?style=flat-square">
-  </a>
-</p>
+[![Build Status](https://img.shields.io/github/actions/workflow/status/clitic/bento4-rs/build.yml?logo=github&style=flat-square)](https://github.com/clitic/bento4-rs/actions)
+[![Crate License](https://img.shields.io/crates/l/mp4decrypt?style=flat-square)](https://crates.io/crates/mp4decrypt)
+[![Repo Size](https://img.shields.io/github/repo-size/clitic/bento4-rs?logo=github&style=flat-square)](https://github.com/clitic/bento4-rs)
 
 A collection of crates that provide a high-level API built on top of [Bento4](https://github.com/axiomatic-systems/Bento4)'s `ap4` library.
 
